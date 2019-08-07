@@ -37,7 +37,7 @@ parser.add_option("--config_filename", dest="config_filename", help=
 				"Location to store all the metadata related to the training (to be used when testing).",
 				default="config.pickle")
 parser.add_option("--output_weight_path", dest="output_weight_path", help="Output path for weights.", default='./model_frcnn.hdf5')
-parser.add_option("--input_weight_path", dest="input_weight_path", help="Input path for weights. If not specified, will try to load default weights provided by keras.", default='/model_frcnn.hdf5')
+parser.add_option("--input_weight_path", dest="input_weight_path", help="Input path for weights. If not specified, will try to load default weights provided by keras.", default='model_frcnn.hdf5')
 
 (options, args) = parser.parse_args()
 
@@ -184,12 +184,12 @@ for epoch_num in range(num_epochs):
 	print('Epoch {}/{}'.format(epoch_num + 1, num_epochs))
 
 	# For visualizing every epochs
-	cnt = len(glob('storage/*/'))
-	os.system('mkdir -p storage/epoch_' + cnt)
+	cnt = str(len(glob('storage/*/')))
+	os.system(str('mkdir -p storage/epoch_' + cnt))
 	os.system('python test_frcnn.py -p test_images')
-	os.system('mv results_imgs/* storage/epoch_' + cnt)
+	os.system(str('mv results_imgs/* storage/epoch_' + cnt))
 	print('=========Saving temporary output images completed============')
-	sys.exit()
+	# sys.exit()
 
 	while True:
 		try:
@@ -200,13 +200,6 @@ for epoch_num in range(num_epochs):
 				print('Average number of overlapping bounding boxes from RPN = {} for {} previous iterations'.format(mean_overlapping_bboxes, epoch_length))
 				if mean_overlapping_bboxes == 0:
 					print('RPN is not producing bounding boxes that overlap the ground truth boxes. Check RPN settings or keep training.')
-
-			cnt = str(len(glob('storage/*/')))
-			os.system(str('mkdir -p storage/epoch_' + cnt))
-			os.system('python test_frcnn.py -p test_images')
-			os.system(str('mv results_imgs/* storage/epoch_' + cnt))
-			print('=========Saving temporary output images completed============')
-			# sys.exit()
 
 			X, Y, img_data = next(data_gen_train)
 
