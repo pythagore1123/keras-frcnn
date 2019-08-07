@@ -6,6 +6,8 @@ import time
 import numpy as np
 from optparse import OptionParser
 import pickle
+import os
+from glob import glob
 
 from keras import backend as K
 from keras.optimizers import Adam, SGD, RMSprop
@@ -180,6 +182,14 @@ for epoch_num in range(num_epochs):
 	progbar = generic_utils.Progbar(epoch_length)
 	print('Epoch {}/{}'.format(epoch_num + 1, num_epochs))
 
+	# For visualizing every epochs
+	cnt = len(glob('storage/*/'))
+	os.system('mkdir -p storage/epoch_' + cnt)
+	os.system('python test_frcnn.py -p test_images')
+	os.system('mv results_imgs/* storage/epoch_' + cnt)
+	print('=========Saving temporary output images completed============')
+	sys.exit()
+
 	while True:
 		try:
 
@@ -273,6 +283,16 @@ for epoch_num in range(num_epochs):
 					print('Loss Detector classifier: {}'.format(loss_class_cls))
 					print('Loss Detector regression: {}'.format(loss_class_regr))
 					print('Elapsed time: {}'.format(time.time() - start_time))
+					with open('storage/logs.json') as json_file:
+						data = []
+						try:
+							data = json.loads(json_file)
+						except:
+							data = []
+						data.append([mean_overlapping_bboxes, class_acc, loss_rpn_cls, loss_rpn_regr, loss_class_cls, loss_class_regr, time.time() - start_time])
+						with open('storage/logs.json'. 'w') as outfile:
+							json.dump(data, outfile)
+					print('======Logging to storage/logs.json completed=========')
 
 				curr_loss = loss_rpn_cls + loss_rpn_regr + loss_class_cls + loss_class_regr
 				iter_num = 0
