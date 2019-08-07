@@ -77,6 +77,7 @@ def identity_block_td(input_tensor, kernel_size, filters, stage, block, trainabl
     bn_name_base = 'bn' + str(stage) + block + '_branch'
 
     x = TimeDistributed(Convolution2D(nb_filter1, (1, 1), trainable=trainable, kernel_initializer='normal'), name=conv_name_base + '2a')(input_tensor)
+    print(input_tensor.shape)
     x = TimeDistributed(FixedBatchNormalization(axis=bn_axis), name=bn_name_base + '2a')(x)
     x = Activation('relu')(x)
 
