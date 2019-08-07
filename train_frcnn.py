@@ -290,7 +290,7 @@ for epoch_num in range(num_epochs):
 						except:
 							data = []
 						data.append([mean_overlapping_bboxes, class_acc, loss_rpn_cls, loss_rpn_regr, loss_class_cls, loss_class_regr, time.time() - start_time])
-						with open('storage/logs.json'. 'w') as outfile:
+						with open('storage/logs.json', 'w') as outfile:
 							json.dump(data, outfile)
 					print('======Logging to storage/logs.json completed=========')
 
