@@ -144,13 +144,13 @@ except:
 	print('Could not load pretrained model weights. Weights can be found in the keras application folder \
 		https://github.com/fchollet/keras/tree/master/keras/applications')
 
-try:
-	model_all.save_weights(C.model_path)
-except Exception as e:
-	print('Test failed {}'.format(e))
-	sys.exit()
+# try:
+# 	model_all.save_weights(C.model_path)
+# except Exception as e:
+# 	print('Test failed {}'.format(e))
+# 	sys.exit()
 
-print('OOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKKKKKKK')
+# print('OOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKKKKKKK')
 
 optimizer = Adam(lr=1e-5)
 optimizer_classifier = Adam(lr=1e-5)
@@ -299,7 +299,7 @@ for epoch_num in range(num_epochs):
 					if C.verbose:
 						print('Total loss decreased from {} to {}, saving weights'.format(best_loss,curr_loss))
 					best_loss = curr_loss
-					model_all.save(C.model_path)
+					model_all.save_weights(C.model_path)
 
 				break
 
