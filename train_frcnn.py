@@ -7,6 +7,7 @@ import numpy as np
 from optparse import OptionParser
 import pickle
 import os
+import json
 from glob import glob
 
 from keras import backend as K
@@ -150,6 +151,13 @@ except Exception as e:
 	sys.exit()
 
 print('OOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKKKKKKK')
+
+cnt = len(glob('storage/*/'))
+os.system('mkdir -p storage/epoch_' + cnt)
+os.system('python test_frcnn.py -p test_images')
+os.system('mv results_imgs/* storage/epoch_' + cnt)
+print('=========Saving temporary output images completed============')
+sys.exit()
 
 optimizer = Adam(lr=1e-5)
 optimizer_classifier = Adam(lr=1e-5)
