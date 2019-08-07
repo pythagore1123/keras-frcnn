@@ -201,12 +201,12 @@ for epoch_num in range(num_epochs):
 				if mean_overlapping_bboxes == 0:
 					print('RPN is not producing bounding boxes that overlap the ground truth boxes. Check RPN settings or keep training.')
 
-			cnt = len(glob('storage/*/'))
+			cnt = str(len(glob('storage/*/')))
 			os.system(str('mkdir -p storage/epoch_' + cnt))
 			os.system('python test_frcnn.py -p test_images')
 			os.system(str('mv results_imgs/* storage/epoch_' + cnt))
 			print('=========Saving temporary output images completed============')
-			sys.exit()
+			# sys.exit()
 
 			X, Y, img_data = next(data_gen_train)
 
@@ -292,11 +292,7 @@ for epoch_num in range(num_epochs):
 					print('Loss Detector regression: {}'.format(loss_class_regr))
 					print('Elapsed time: {}'.format(time.time() - start_time))
 					with open('storage/logs.json') as json_file:
-						data = []
-						try:
-							data = json.loads(json_file)
-						except:
-							data = []
+						data = json.load(json_file)
 						data.append([mean_overlapping_bboxes, class_acc, loss_rpn_cls, loss_rpn_regr, loss_class_cls, loss_class_regr, time.time() - start_time])
 						with open('storage/logs.json', 'w') as outfile:
 							json.dump(data, outfile)
