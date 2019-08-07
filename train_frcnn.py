@@ -152,13 +152,6 @@ except Exception as e:
 
 print('OOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKKKKKKK')
 
-cnt = len(glob('storage/*/'))
-os.system('mkdir -p storage/epoch_' + cnt)
-os.system('python test_frcnn.py -p test_images')
-os.system('mv results_imgs/* storage/epoch_' + cnt)
-print('=========Saving temporary output images completed============')
-sys.exit()
-
 optimizer = Adam(lr=1e-5)
 optimizer_classifier = Adam(lr=1e-5)
 model_rpn.compile(optimizer=optimizer, loss=[losses.rpn_loss_cls(num_anchors), losses.rpn_loss_regr(num_anchors)])
@@ -207,6 +200,13 @@ for epoch_num in range(num_epochs):
 				print('Average number of overlapping bounding boxes from RPN = {} for {} previous iterations'.format(mean_overlapping_bboxes, epoch_length))
 				if mean_overlapping_bboxes == 0:
 					print('RPN is not producing bounding boxes that overlap the ground truth boxes. Check RPN settings or keep training.')
+
+			cnt = len(glob('storage/*/'))
+			os.system('mkdir -p storage/epoch_' + cnt)
+			os.system('python test_frcnn.py -p test_images')
+			os.system('mv results_imgs/* storage/epoch_' + cnt)
+			print('=========Saving temporary output images completed============')
+			sys.exit()
 
 			X, Y, img_data = next(data_gen_train)
 
