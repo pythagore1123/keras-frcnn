@@ -202,9 +202,9 @@ for epoch_num in range(num_epochs):
 					print('RPN is not producing bounding boxes that overlap the ground truth boxes. Check RPN settings or keep training.')
 
 			cnt = len(glob('storage/*/'))
-			os.system('mkdir -p storage/epoch_' + cnt)
+			os.system(str('mkdir -p storage/epoch_' + cnt))
 			os.system('python test_frcnn.py -p test_images')
-			os.system('mv results_imgs/* storage/epoch_' + cnt)
+			os.system(str('mv results_imgs/* storage/epoch_' + cnt))
 			print('=========Saving temporary output images completed============')
 			sys.exit()
 
