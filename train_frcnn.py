@@ -184,11 +184,11 @@ for epoch_num in range(num_epochs):
 	print('Epoch {}/{}'.format(epoch_num + 1, num_epochs))
 
 	# For visualizing every epochs
-	cnt = str(len(glob('storage/*/')))
-	os.system(str('mkdir -p storage/epoch_' + cnt))
-	os.system('python test_frcnn.py -p test_images')
-	os.system(str('mv results_imgs/* storage/epoch_' + cnt))
-	print('=========Saving temporary output images completed============')
+	# cnt = str(len(glob('storage/*/')))
+	# os.system(str('mkdir -p storage/epoch_' + cnt))
+	# os.system('python test_frcnn.py -p test_images')
+	# os.system(str('mv results_imgs/* storage/epoch_' + cnt))
+	# print('=========Saving temporary output images completed============')
 	# sys.exit()
 
 	while True:
